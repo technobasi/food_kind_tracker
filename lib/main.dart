@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_kind_tracker/color_schemes.g.dart';
 import 'package:food_kind_tracker/screens/MainScreen.dart';
 
 void main() {
@@ -14,9 +15,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Omnomnom Tracking",
       theme: ThemeData(
-        useMaterial3: false,
-        primarySwatch: Colors.blue,
+        useMaterial3: true,
+        colorScheme: lightColorScheme
       ),
+     darkTheme: ThemeData(
+       useMaterial3: true,
+       colorScheme: darkColorScheme
+     ),
      home: const MainScreen()
     );
   }
