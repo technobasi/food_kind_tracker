@@ -13,9 +13,11 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
+
   static const List<Widget> _subscreens = [InputWidget(), ResultWidget()];
 
   void _onItemTapped(int index) {
+
     setState(() {
       _selectedIndex = index;
     });
