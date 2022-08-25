@@ -22,9 +22,24 @@ class _InputWidgetState extends State<InputWidget> {
   @override
   void initState() {
     dateInput.text = _dateFormatter.format(_selectedDate);
-    _selected_meal = MealType.valueOf(
-        mealBox.get(_dateFormatter.format(_selectedDate)));
+    loadMealFromHive();
     super.initState();
+  }
+
+  void loadMealFromHive() {
+    var mealString = mealBox.get(_dateFormatter.format(_selectedDate));
+    if(mealString != null) {
+      _selected_meal = MealType.values.byName(mealString);
+    } else {
+      _selected_meal = null;
+    }
+  }
+  void setNewDate(DateTime newDate) {
+    setState(() {
+      _selectedDate = newDate;
+      dateInput.text = _dateFormatter.format(_selectedDate);
+      loadMealFromHive();
+    });
   }
 
   @override
@@ -35,10 +50,7 @@ class _InputWidgetState extends State<InputWidget> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        setState(() {
-                          _selectedDate = _selectedDate.subtract(_ONE_DAY);
-                          dateInput.text = _dateFormatter.format(_selectedDate);
-                        });
+                        setNewDate(_selectedDate.subtract(_ONE_DAY));
                       },
                       icon: const Icon(Icons.arrow_back)),
                   SizedBox(
@@ -57,20 +69,14 @@ class _InputWidgetState extends State<InputWidget> {
                             lastDate:
                             DateTime.now().add(const Duration(days: 365 * 10)));
                         if (pickedDate != null) {
-                          setState(() {
-                            _selectedDate = pickedDate;
-                            dateInput.text = _dateFormatter.format(pickedDate);
-                          });
+                          setNewDate(pickedDate);
                         }
                       },
                     ),
                   ),
                   IconButton(
                       onPressed: () {
-                        setState(() {
-                          _selectedDate = _selectedDate.add(_ONE_DAY);
-                          dateInput.text = _dateFormatter.format(_selectedDate);
-                        });
+                        setNewDate(_selectedDate.add(_ONE_DAY));
                       },
                       icon: const Icon(Icons.arrow_forward))
                 ],
@@ -86,7 +92,7 @@ class _InputWidgetState extends State<InputWidget> {
                             : null,
                         onTap: () {
                           mealBox.put(_dateFormatter.format(_selectedDate),
-                              MealType.OMNI.toString()).then((value) {
+                              MealType.OMNI.name).then((value) {
                             setState(() {
                            _selected_meal = MealType.OMNI;
                           });
@@ -103,7 +109,7 @@ class _InputWidgetState extends State<InputWidget> {
                         onTap: () {
                           setState(() {
                             _selected_meal = MealType.VEGGIE;
-                            mealBox.put(_dateFormatter.format(_selectedDate), MealType.VEGGIE.toString());
+                            mealBox.put(_dateFormatter.format(_selectedDate), MealType.VEGGIE.name);
                           });
                         },
                       ),
@@ -117,7 +123,7 @@ class _InputWidgetState extends State<InputWidget> {
                         onTap: () {
                           setState(() {
                             _selected_meal = MealType.VEGAN;
-                            mealBox.put(_dateFormatter.format(_selectedDate), MealType.VEGAN.toString());
+                            mealBox.put(_dateFormatter.format(_selectedDate), MealType.VEGAN.name);
                           });
                         },
                       ),
