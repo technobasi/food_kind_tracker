@@ -50,11 +50,14 @@ class _InputWidgetState extends State<InputWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  IconButton(
-                      onPressed: () {
-                        setNewDate(_selectedDate.subtract(_ONE_DAY));
-                      },
-                      icon: const Icon(Icons.arrow_back)),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
+                    child: IconButton(
+                        onPressed: () {
+                          setNewDate(_selectedDate.subtract(_ONE_DAY));
+                        },
+                        icon: const Icon(Icons.arrow_back)),
+                  ),
                   SizedBox(
                     width: 200,
                     child: TextField(
@@ -76,62 +79,70 @@ class _InputWidgetState extends State<InputWidget> {
                       },
                     ),
                   ),
-                  IconButton(
-                      onPressed: () {
-                        setNewDate(_selectedDate.add(_ONE_DAY));
-                      },
-                      icon: const Icon(Icons.arrow_forward))
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                    child: IconButton(
+                        onPressed: () {
+                          setNewDate(_selectedDate.add(_ONE_DAY));
+                        },
+                        icon: const Icon(Icons.arrow_forward)),
+                  )
                 ],
               ),
               Flexible(
-                child: ListView(
-                  children: [
-                       Card(
-                          child: ListTile(
-                            title: const Text("Mischkost",
-                            textAlign: TextAlign.center,),
-                            trailing: _selected_meal == MealType.OMNI
-                                ? const Icon(Icons.check)
-                                : null,
-                            onTap: () {
-                              mealBox.put(_dateFormatter.format(_selectedDate),
-                                  MealType.OMNI.name).then((value) {
-                                setState(() {
-                               _selected_meal = MealType.OMNI;
-                              });
-                              });
-                            },
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(300, 50, 300, 0),
+                  child: ListView(
+                    children: [
+                         Card(
+                            child: ListTile(
+                              title: const Text("Mischkost",
+                              textAlign: TextAlign.center,),
+                              trailing: _selected_meal == MealType.OMNI
+                                  ? const Icon(Icons.check)
+                                  : null,
+                              onTap: () {
+                                mealBox.put(_dateFormatter.format(_selectedDate),
+                                    MealType.OMNI.name).then((value) {
+                                  setState(() {
+                                 _selected_meal = MealType.OMNI;
+                                });
+                                });
+                              },
+                            ),
                           ),
+                      Card(
+                        child: ListTile(
+                          title: const Text("Vegetarisch",
+                          textAlign: TextAlign.center,),
+                          trailing: _selected_meal == MealType.VEGGIE
+                              ? const Icon(Icons.check)
+                              : null,
+                          onTap: () {
+                            setState(() {
+                              _selected_meal = MealType.VEGGIE;
+                              mealBox.put(_dateFormatter.format(_selectedDate), MealType.VEGGIE.name);
+                            });
+                          },
                         ),
-                    Card(
-                      child: ListTile(
-                        title: const Text("Vegetarisch"),
-                        trailing: _selected_meal == MealType.VEGGIE
-                            ? const Icon(Icons.check)
-                            : null,
-                        onTap: () {
-                          setState(() {
-                            _selected_meal = MealType.VEGGIE;
-                            mealBox.put(_dateFormatter.format(_selectedDate), MealType.VEGGIE.name);
-                          });
-                        },
                       ),
-                    ),
-                    Card(
-                      child: ListTile(
-                        title: Text("Vegan"),
-                        trailing: _selected_meal == MealType.VEGAN
-                            ? const Icon(Icons.check)
-                            : null,
-                        onTap: () {
-                          setState(() {
-                            _selected_meal = MealType.VEGAN;
-                            mealBox.put(_dateFormatter.format(_selectedDate), MealType.VEGAN.name);
-                          });
-                        },
+                      Card(
+                        child: ListTile(
+                          title: Text("Vegan",
+                          textAlign: TextAlign.center,),
+                          trailing: _selected_meal == MealType.VEGAN
+                              ? const Icon(Icons.check)
+                              : null,
+                          onTap: () {
+                            setState(() {
+                              _selected_meal = MealType.VEGAN;
+                              mealBox.put(_dateFormatter.format(_selectedDate), MealType.VEGAN.name);
+                            });
+                          },
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               )
             ],
