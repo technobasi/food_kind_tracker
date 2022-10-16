@@ -14,7 +14,17 @@ class ResultWidget extends StatelessWidget {
     List meals = dates.map((e) => mealBox.get(e)).where((element) => element != null).toList();
     return Column(
       children: [
-        Text("Auswertung für das Jahr ${DateTime.now().year}"),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
+          child: Text("Auswertung für das Jahr ${DateTime.now().year}",
+          style: const TextStyle(
+            fontSize: 40
+          ),),
+        ),
+        Text("Anzahl Tage",
+          style: const TextStyle(
+              fontSize: 20
+          )),
         MealSumCard(meals: meals, title: "Vegan", mealType: MealType.VEGAN,),
         MealSumCard(meals: meals, title: "Vegetarisch", mealType: MealType.VEGGIE,),
         MealSumCard(meals: meals, title: "Mischkost", mealType: MealType.OMNI,)
@@ -53,18 +63,25 @@ class MealSumCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var sumOfType = meals.where((element) => MealType.values.byName(element) == mealType).length;
-    return Container(
-      width: 200,
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
-        ),
-        elevation: 5,
-        child: Column(
-          children: [
-            Text("$title"),
-            Text("$sumOfType")
-          ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        width: 200,
+        height: 100,
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          elevation: 5,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Text("$title",
+              style: const TextStyle(fontSize: 30)),
+              Text("$sumOfType",
+                  style: const TextStyle(fontSize: 20))
+            ],
+          ),
         ),
       ),
     );
