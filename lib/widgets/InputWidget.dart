@@ -47,6 +47,8 @@ class _InputWidgetState extends State<InputWidget> {
           return Column(
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   IconButton(
                       onPressed: () {
@@ -84,22 +86,23 @@ class _InputWidgetState extends State<InputWidget> {
               Flexible(
                 child: ListView(
                   children: [
-                    Card(
-                      child: ListTile(
-                        title: const Text("Mischkost"),
-                        trailing: _selected_meal == MealType.OMNI
-                            ? const Icon(Icons.check)
-                            : null,
-                        onTap: () {
-                          mealBox.put(_dateFormatter.format(_selectedDate),
-                              MealType.OMNI.name).then((value) {
-                            setState(() {
-                           _selected_meal = MealType.OMNI;
-                          });
-                          });
-                        },
-                      ),
-                    ),
+                       Card(
+                          child: ListTile(
+                            title: const Text("Mischkost",
+                            textAlign: TextAlign.center,),
+                            trailing: _selected_meal == MealType.OMNI
+                                ? const Icon(Icons.check)
+                                : null,
+                            onTap: () {
+                              mealBox.put(_dateFormatter.format(_selectedDate),
+                                  MealType.OMNI.name).then((value) {
+                                setState(() {
+                               _selected_meal = MealType.OMNI;
+                              });
+                              });
+                            },
+                          ),
+                        ),
                     Card(
                       child: ListTile(
                         title: const Text("Vegetarisch"),
